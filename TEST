@@ -1,1 +1,32 @@
-PRUEBA FUNCInal
+-- 1)
+
+--viajero--
+data Viajero = Viajero String Int [Recuerdo] [Viaje] deriving Show
+--1a)
+nombreViajero(Viajero nombre _ _ _) = nombre
+edadViajero(Viajero _ edad _ _) = edad
+--2)
+recuerdosViajero(Viajero _ _ recuerdos _) = recuerdos
+viajesViajero(Viajero _ _ _ viajes) = viajes
+recuerdosViajes(Viajero _ _ recuerdos viajes) = (recuerdos,viajes)
+
+--viaje--
+data Viaje = Viaje String Bool Int deriving Show
+--1b)
+nombreViaje(Viaje nombre _ _) = nombre
+viajeAlFuturo(Viaje _ alFuturo _) = alFuturo
+anioViaje(Viaje _ _ anio) = anio
+
+--recuerdo--
+data Recuerdo = Recuerdo String String deriving Show
+--1c)
+nombreRecuerdo(Recuerdo nombre _) = nombre
+lugarRecuerdo(Recuerdo _ lugar) = lugar
+
+--
+primerViaje = Viaje "Viaje a Hill Valley, 1955" False 1955
+recuerdoBaile = Recuerdo "Baile del encanto bajo el oceano" "Escuela Secundaria"
+recuerdoPersecucion = Recuerdo "Persecucion con Biff" "Autopista"
+
+marty = Viajero "Marty McFly" 17 [recuerdoBaile,recuerdoPersecucion] [primerViaje]
+doc = Viajero "Dr Emmet Brown" 65 [] [primerViaje]
