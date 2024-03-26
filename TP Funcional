@@ -30,3 +30,6 @@ recuerdoPersecucion = Recuerdo "Persecucion con Biff" "Autopista"
 
 marty = Viajero "Marty McFly" 17 [recuerdoBaile,recuerdoPersecucion] [primerViaje]
 doc = Viajero "Dr Emmet Brown" 65 [] [primerViaje]
+
+
+PUNTO 3
