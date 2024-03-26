@@ -11,11 +11,18 @@ viajesViajero(Viajero _ _ _ viajes) = viajes
 recuerdosViajes(Viajero _ _ recuerdos viajes) = (recuerdos,viajes)
 
 --viaje--
-data Viaje = Viaje String Bool Int deriving Show
+data Viaje = Viaje String Bool Int [Recuerdo] deriving Show
 --1b)
-nombreViaje(Viaje nombre _ _) = nombre
-viajeAlFuturo(Viaje _ alFuturo _) = alFuturo
-anioViaje(Viaje _ _ anio) = anio
+nombreLugarViaje(Viaje nombre _ _ _) = nombre
+viajeAlFuturo(Viaje _ alFuturo _ _) = alFuturo
+anioViaje(Viaje _ _ anio _) = anio
+
+-- 3)
+esInteresante (Viaje nombreLugar alFuturo anio recuerdos)
+ | nombreLugar == "Lejano Oeste" = True
+ | alFuturo == False && length recuerdos > 5 = True
+ | alFuturo = True
+ | otherwise = False
 
 --recuerdo--
 data Recuerdo = Recuerdo String String deriving Show
@@ -24,12 +31,13 @@ nombreRecuerdo(Recuerdo nombre _) = nombre
 lugarRecuerdo(Recuerdo _ lugar) = lugar
 
 --
-primerViaje = Viaje "Viaje a Hill Valley, 1955" False 1955
 recuerdoBaile = Recuerdo "Baile del encanto bajo el oceano" "Escuela Secundaria"
 recuerdoPersecucion = Recuerdo "Persecucion con Biff" "Autopista"
+recuerdoTiburon = Recuerdo "Holograma de Jaws 19" "Plaza"
 
-marty = Viajero "Marty McFly" 17 [recuerdoBaile,recuerdoPersecucion] [primerViaje]
-doc = Viajero "Dr Emmet Brown" 65 [] [primerViaje]
+primerViaje = Viaje "Hill Valley" False 1955 [recuerdoBaile,recuerdoPersecucion]
+viajeFuturo = Viaje "Hill Valley" True 2015 [recuerdoTiburon]
+viajeOeste = Viaje "Lejano Oeste" False 1885 []
 
-
-PUNTO 3
+marty = Viajero "Marty McFly" 17 [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon] [primerViaje,viajeFuturo,viajeOeste]
+doc = Viajero "Dr Emmet Brown" 65 [] [primerViaje,viajeFuturo,viajeOeste]
