@@ -30,7 +30,8 @@ esInteresante (Futuro _ _ _ _) = True
 --4. Hacer una función que dada una lista de viajes, permita mostrar los nombres y los años de todos los viajes que son interesantes.
 nombresYAniosDeViajesInteresantes listaViajes = [(obtenerAnioViaje x, obtenerNombreViaje x)  | x <- listaViajes, esInteresante x]
 
-
+obtenerAnioViaje (Pasado _ _ _ anio) = anio
+obtenerAnioViaje (Futuro _ _ _ anio) = anio
 
 --
 recuerdoBaile = Recuerdo "Baile del encanto bajo el oceano" "Escuela Secundaria"
