@@ -1,34 +1,36 @@
 -- 1)
+data Viajero = Viajero String Int [Recuerdo] [Viaje] deriving (Show,Eq)
+data Viaje = Pasado String [String] [Recuerdo] Int | Futuro String [String] Int Int deriving (Show,Eq)
+data Recuerdo = Recuerdo String String deriving (Show,Eq)
 
---viajero--
-data Viajero = Viajero String Int [Recuerdo] [Viaje] deriving Show
---1a)
+--Se pide:
+--1. Definir las funciones que permitan obtener:
+--a. Dado un viajero su nombre,
+--b. Dado un viaje, su nombre
+--c. Dado un recuerdo, su nombre y el lugar de donde proviene
+
 nombreViajero(Viajero nombre _ _ _) = nombre
-edadViajero(Viajero _ edad _ _) = edad
---2)
-recuerdosViajero(Viajero _ _ recuerdos _) = recuerdos
-viajesViajero(Viajero _ _ _ viajes) = viajes
-recuerdosViajes(Viajero _ _ recuerdos viajes) = (recuerdos,viajes)
 
---viaje--
-data Viaje = Viaje String Bool Int [Recuerdo] deriving Show
---1b)
-nombreLugarViaje(Viaje nombre _ _ _) = nombre
-viajeAlFuturo(Viaje _ alFuturo _ _) = alFuturo
-anioViaje(Viaje _ _ anio _) = anio
+nombreLugarViaje(Pasado nombre _ _ _) = nombre
+nombreLugarViaje(Futuro nombre _ _ _) = nombre
 
--- 3)
-esInteresante (Viaje nombreLugar alFuturo anio recuerdos)
- | nombreLugar == "Lejano Oeste" = True
- | alFuturo == False && length recuerdos > 5 = True
- | alFuturo = True
- | otherwise = False
+nombreYLugarRecuerdo (Recuerdo nombre lugar) = (nombre,lugar)
 
---recuerdo--
-data Recuerdo = Recuerdo String String deriving Show
---1c)
-nombreRecuerdo(Recuerdo nombre _) = nombre
-lugarRecuerdo(Recuerdo _ lugar) = lugar
+--2. Definir una función que permita obtener los recuerdos y los viajes de un viajero.
+recuerdosYViajes(Viajero _ _ recuerdos viajes) = (recuerdos,viajes)
+
+--3. Hacer una función que permita saber si un viaje es interesante. Un viaje es interesante si:
+--a. Si el destino del viaje es el lejano oeste
+--b. Si es un viaje al pasado y el viajero se puede traer más de 5 recuerdos
+--c. Todos los viajes al futuro son interesantes.
+esInteresante (Pasado _ recuerdos _ _) = length recuerdos > 5
+esInteresante (Pasado nombre _ _ _) = nombre == "Lejano Oeste"
+esInteresante (Futuro _ _ _ _) = True
+
+--4. Hacer una función que dada una lista de viajes, permita mostrar los nombres y los años de todos los viajes que son interesantes.
+nombresYAniosDeViajesInteresantes listaViajes = [(obtenerAnioViaje x, obtenerNombreViaje x)  | x <- listaViajes, esInteresante x]
+
+
 
 --
 recuerdoBaile = Recuerdo "Baile del encanto bajo el oceano" "Escuela Secundaria"
@@ -41,3 +43,7 @@ viajeOeste = Viaje "Lejano Oeste" False 1885 []
 
 marty = Viajero "Marty McFly" 17 [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon] [primerViaje,viajeFuturo,viajeOeste]
 doc = Viajero "Dr Emmet Brown" 65 [] [primerViaje,viajeFuturo,viajeOeste]
+
+
+
+
