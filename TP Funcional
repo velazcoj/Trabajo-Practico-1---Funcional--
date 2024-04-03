@@ -60,7 +60,7 @@ esViajeFuturo (Pasado _ _ _ _) = False
 esViajeFuturo (Futuro _ _ _ _) = True
 
 --consulta C
--- estadistica (viaje -> True) nombreLugarViaje [viajePasado, viajeFuturo, viajeAChina, viajeDeAmigos]
+-- estadistica (\viaje -> True) nombreLugarViaje [viajePasado, viajeFuturo, viajeAChina, viajeDeAmigos]
 
 viajero1 = Viajero "Pedro" 35 [] []
 viajero2 = Viajero "Carlos" 19 [] []
