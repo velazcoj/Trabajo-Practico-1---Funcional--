@@ -23,8 +23,7 @@ recuerdosYViajes(Viajero _ _ recuerdos viajes) = (recuerdos,viajes)
 --a. Si el destino del viaje es el lejano oeste
 --b. Si es un viaje al pasado y el viajero se puede traer más de 5 recuerdos
 --c. Todos los viajes al futuro son interesantes.
-esInteresante (Pasado _ recuerdos _ _) = length recuerdos > 5
-esInteresante (Pasado nombre _ _ _) = nombre == "Lejano Oeste"
+esInteresante (Pasado nombre _ recuerdos _) = nombre == "Lejano Oeste" || length recuerdos > 5
 esInteresante (Futuro _ _ _ _) = True
 
 --4. Hacer una función que dada una lista de viajes, permita mostrar los nombres y los años de todos los viajes que son interesantes.
