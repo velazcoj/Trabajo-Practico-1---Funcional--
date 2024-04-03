@@ -39,19 +39,47 @@ viajesEntreAnios (viaje:restoViajes) anioInicio anioFin | anioInicio > anioFin =
                                                         | obtenerAnioViaje viaje >= anioInicio && obtenerAnioViaje viaje <= anioFin = (nombreLugarViaje viaje, obtenerAnioViaje viaje) : viajesEntreAnios restoViajes anioInicio anioFin
                                                         | otherwise = viajesEntreAnios restoViajes anioInicio anioFin
 
+--7. Hacer la función estadística que reciba una función de condición, una función de transformación y una lista. Luego, usarla para resolver las siguientes consultas:
+--a. Dada una lista, encontrar todos los nombres de los viajes que tienen más de 3 transformaciones.
+--b. Dada una lista de viajes, obtener la suma de todos los años luz que suman
+--c. Dada una lista, obtener los nombres de todos los viajes. Tener en cuenta que los viajes al pasado no suman años luz.
+--Nota: sólo se puede hacer la función estadística y usar la misma en forma de consulta en los puntos a, b y c. No se pueden usar funciones
+
+estadistica condicion transformacion lista = map transformacion (filter condicion lista)
+
+--consulta A
+-- estadistica ((>3).length).transformacion obtenerNombreViaje [viajePasado,viajeFuturo,viajeAChina]
+
+transformacion (Futuro _ transformacion _ _) = transformacion
+transformacion (Pasado _ transformacion _ _) = transformacion
+
+--consulta B
+-- estadistica esViajeFuturo sum(\(Futuro _ _ _ aniosLuz) -> aniosLuz) [viajePasado, viajeFuturo, viajeAChina]
+
+esViajeFuturo (Pasado _ _ _ _) = False
+esViajeFuturo (Futuro _ _ _ _) = True
+
+--consulta C
+-- estadistica (viaje -> True) obtenerNombreViaje [viajePasado, viajeFuturo, viajeAChina]
+
+viajero1 = Viajero "Pedro" 35 [] []
+viajero2 = Viajero "Carlos" 19 [] []
+marty = Viajero "Marty McFly" 17 [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon] [viajePasado,viajeFuturo,viajeAChina]
+doc = Viajero "Dr Emmet Brown" 65 [] [viajePasado,viajeFuturo,viajeAChina]
+
 recuerdoBaile = Recuerdo "Baile del encanto bajo el oceano" "Escuela Secundaria"
 recuerdoPersecucion = Recuerdo "Persecucion con Biff" "Autopista"
 recuerdoTiburon = Recuerdo "Holograma de Jaws 19" "Plaza"
+recuerdoPartido = Recuerdo "Partido entre amigos" "Cancha de independiente"
+recuerdoChoque = Recuerdo "Choque Automovilistico" "Ruta 11"
+recuerdoHamburguesa = Recuerdo "Hamburguesa triple" "Burger King"
 
 viajePasado = Pasado "Marte" [] [] 1950
 viajeFuturo = Futuro "Luna" [] 300 2010
 viajeAChina = Futuro "China" [] 100 1985
---primerViaje = Viaje "Hill Valley" False 1955 [recuerdoBaile,recuerdoPersecucion]
---viajeFuturo = Viaje "Hill Valley" True 2015 [recuerdoTiburon]
---viajeOeste = Viaje "Lejano Oeste" False 1885 []
+viajePrueba = Pasado "Lejano Oeste" [] [] 2005
+viajeDeAmigos = Pasado "Tokyo" [] [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon, recuerdoChoque, recuerdoHamburguesa, recuerdoPartido] 1930
 
-marty = Viajero "Marty McFly" 17 [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon] [viajePasado,viajeFuturo,viajeAChina]
-doc = Viajero "Dr Emmet Brown" 65 [] [viajePasado,viajeFuturo,viajeAChina]
 
 
 
