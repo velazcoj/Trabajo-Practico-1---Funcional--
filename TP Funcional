@@ -48,19 +48,19 @@ viajesEntreAnios (viaje:restoViajes) anioInicio anioFin | anioInicio > anioFin =
 estadistica condicion transformacion lista = map transformacion (filter condicion lista)
 
 --consulta A
--- estadistica ((>3).length).transformacion obtenerNombreViaje [viajePasado,viajeFuturo,viajeAChina]
+-- estadistica ((>3).length).transformacion nombreLugarViaje [viajePasado,viajeFuturo,viajeAChina]
 
 transformacion (Futuro _ transformacion _ _) = transformacion
 transformacion (Pasado _ transformacion _ _) = transformacion
 
 --consulta B
--- estadistica esViajeFuturo sum(\(Futuro _ _ _ aniosLuz) -> aniosLuz) [viajePasado, viajeFuturo, viajeAChina]
+-- estadistica esViajeFuturo sum(\(Futuro _ _ _ aniosLuz) -> aniosLuz) [viajePasado, viajeFuturo, viajeAChina, viajePrueba]
 
 esViajeFuturo (Pasado _ _ _ _) = False
 esViajeFuturo (Futuro _ _ _ _) = True
 
 --consulta C
--- estadistica (viaje -> True) obtenerNombreViaje [viajePasado, viajeFuturo, viajeAChina]
+-- estadistica (viaje -> True) nombreLugarViaje [viajePasado, viajeFuturo, viajeAChina, viajeDeAmigos]
 
 viajero1 = Viajero "Pedro" 35 [] []
 viajero2 = Viajero "Carlos" 19 [] []
