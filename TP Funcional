@@ -38,6 +38,46 @@ viajesEntreAnios (viaje:restoViajes) anioInicio anioFin | anioInicio > anioFin =
                                                         | obtenerAnioViaje viaje >= anioInicio && obtenerAnioViaje viaje <= anioFin = (nombreLugarViaje viaje, obtenerAnioViaje viaje) : viajesEntreAnios restoViajes anioInicio anioFin
                                                         | otherwise = viajesEntreAnios restoViajes anioInicio anioFin
 
+--6 
+
+edadViajero (Viajero _ edad _ _) = edad
+recuerdosViajero (Viajero _ _ [] _) = []
+recuerdosViajero (Viajero _ _ recuerdos _) = recuerdos
+viajesViajero (Viajero _ _ _ []) = []
+viajesViajero (Viajero _ _ _ viajes) = viajes
+incrementarEdad viajero incremento = Viajero (nombreViajero viajero) (edadViajero viajero + incremento) (recuerdosViajero viajero) (viajesViajero viajero)
+
+ganarUnAnio viajero = incrementarEdad viajero 1
+ganarUnaDecada viajero = incrementarEdad viajero 10
+
+
+vocales = ["A","E","I","O","U","a","e","i","o","u"]
+empiezaEnVocal palabra = elem (take 1 palabra) vocales
+lugarRecuerdo recuerdo = snd (nombreYLugarRecuerdo recuerdo)
+recuerdosSinVocal recuerdos = filter ((not.empiezaEnVocal).lugarRecuerdo) recuerdos
+recuerdosSinConsonante recuerdos = filter ((empiezaEnVocal).lugarRecuerdo) recuerdos
+
+
+perderRecuerdosConVocal viajero = Viajero (nombreViajero viajero) (edadViajero viajero) (recuerdosSinVocal (recuerdosViajero viajero)) (viajesViajero viajero)
+perderRecuerdosConConsonante viajero = Viajero (nombreViajero viajero) (edadViajero viajero) (recuerdosSinConsonante (recuerdosViajero viajero)) (viajesViajero viajero)
+
+
+agregarViajes [] nuevosViajes = nuevosViajes
+agregarViajes (viaje:viajes) nuevosViajes = viaje : agregarViajes viajes nuevosViajes
+agregarViajesAViajero viajero viajes = agregarViajes (viajesViajero viajero) viajes
+
+transformacionesViaje (Pasado _ [] _ _) = []
+transformacionesViaje (Pasado _ transformaciones _ _) = transformaciones
+transformacionesViaje (Futuro _ transformaciones _ _) = transformaciones
+aplicarTransformacion viajero transformacion = transformacion viajero
+
+recuerdosDeViaje (Pasado _ _ [] _) = []
+recuerdosDeViaje (Pasado _ _ recuerdos _) = recuerdos
+recuerdosDeViaje (Futuro _ _ _ _) = []
+
+viajarYObtenerRecuerdos viajero viajes = map recuerdosDeViaje (agregarViajesAViajero viajero viajes)
+
+
 --7. Hacer la función estadística que reciba una función de condición, una función de transformación y una lista. Luego, usarla para resolver las siguientes consultas:
 --a. Dada una lista, encontrar todos los nombres de los viajes que tienen más de 3 transformaciones.
 --b. Dada una lista de viajes, obtener la suma de todos los años luz que suman
