@@ -85,13 +85,13 @@ viajarYObtenerRecuerdos viajero viajes = map recuerdosDeViaje (agregarViajesAVia
 estadistica condicion transformacion lista = map transformacion (filter condicion lista)
 
 --consulta A
--- estadistica ((>3).length).transformacion nombreLugarViaje [viajePasado,viajeFuturo,viajeAChina]
+-- estadistica ((>3).length).transformaciones nombreLugarViaje [viajePasado,viajeFuturo,viajeAChina]
 
-transformacion (Futuro _ transformacion _ _) = transformacion
-transformacion (Pasado _ transformacion _ _) = transformacion
+transformaciones (Futuro _ transformacion _ _) = transformacion
+transformaciones (Pasado _ transformacion _ _) = transformacion
 
 --consulta B
--- estadistica esViajeFuturo sum(\(Futuro _ _ _ aniosLuz) -> aniosLuz) [viajePasado, viajeFuturo, viajeAChina, viajePrueba]
+-- sum (estadistica esViajeFuturo (\(Futuro _ _ _ aniosLuz) -> aniosLuz) [viajePasado, viajeFuturo, viajeAChina, viajePrueba])
 
 esViajeFuturo (Pasado _ _ _ _) = False
 esViajeFuturo (Futuro _ _ _ _) = True
