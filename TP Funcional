@@ -23,14 +23,17 @@ recuerdosYViajes(Viajero _ _ recuerdos viajes) = (recuerdos,viajes)
 --a. Si el destino del viaje es el lejano oeste
 --b. Si es un viaje al pasado y el viajero se puede traer más de 5 recuerdos
 --c. Todos los viajes al futuro son interesantes.
-esInteresante (Pasado nombre _ recuerdos _) = nombre == "Lejano Oeste" || length recuerdos > 5
-esInteresante (Futuro _ _ _ _) = True
+esintereasante (Pasado _ _ listaRecuerdos _) = length listaRecuerdos > 5                          
+esintereasante (Pasado "Lejano Oeste" _ _ _) = True                                                          
+esintereasante (Futuro _ _ _ _) = True
 
 --4. Hacer una función que dada una lista de viajes, permita mostrar los nombres y los años de todos los viajes que son interesantes.
-nombresYAniosDeViajesInteresantes listaViajes = [(obtenerAnioViaje x, nombreLugarViaje x)  | x <- listaViajes, esInteresante x]
+nombresyaniosviajes (Pasado lugarviaje _ _ anio) = (lugarviaje,anio)
+nombresyaniosviajes (Futuro lugarviaje _ _ anio) = (lugarviaje,anio)
 
-obtenerAnioViaje (Pasado _ _ _ anio) = anio
-obtenerAnioViaje (Futuro _ _ _ anio) = anio
+
+nombresYAniosDeViajesInteresantes viajes = map nombresyaniosviajes (filter esintereasante viajes)
+  
 
 --5. Hacer una función que dada una lista de viajes, un año inicio y un año fin, se pueda obtener cuáles son los nombres y el año de todos los viajes entre dos años que están en el rango pasado por parámetro.
 viajesEntreAnios [] anioInicio anioFin = []
