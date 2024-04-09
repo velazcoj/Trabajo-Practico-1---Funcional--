@@ -23,23 +23,18 @@ recuerdosYViajes(Viajero _ _ recuerdos viajes) = (recuerdos,viajes)
 --a. Si el destino del viaje es el lejano oeste
 --b. Si es un viaje al pasado y el viajero se puede traer más de 5 recuerdos
 --c. Todos los viajes al futuro son interesantes.
-esintereasante (Pasado _ _ listaRecuerdos _) = length listaRecuerdos > 5                          
-esintereasante (Pasado "Lejano Oeste" _ _ _) = True                                                          
-esintereasante (Futuro _ _ _ _) = True
+esInteresante (Pasado _ _ listaRecuerdos _) = length listaRecuerdos > 5                          
+esInteresante (Pasado "Lejano Oeste" _ _ _) = True                                                          
+esInteresante (Futuro _ _ _ _) = True
 
 --4. Hacer una función que dada una lista de viajes, permita mostrar los nombres y los años de todos los viajes que son interesantes.
-nombresyaniosviajes (Pasado lugarviaje _ _ anio) = (lugarviaje,anio)
-nombresyaniosviajes (Futuro lugarviaje _ _ anio) = (lugarviaje,anio)
-
-
-nombresYAniosDeViajesInteresantes viajes = map nombresyaniosviajes (filter esintereasante viajes)
+nombresYAniosViajes (Pasado lugarviaje _ _ anio) = (lugarviaje,anio)
+nombresYAniosViajes (Futuro lugarviaje _ _ anio) = (lugarviaje,anio)
+nombresYAniosDeViajesInteresantes viajes = map nombresYAniosViajes (filter esInteresante viajes)
   
 
 --5. Hacer una función que dada una lista de viajes, un año inicio y un año fin, se pueda obtener cuáles son los nombres y el año de todos los viajes entre dos años que están en el rango pasado por parámetro.
-viajesEntreAnios [] anioInicio anioFin = []
-viajesEntreAnios (viaje:restoViajes) anioInicio anioFin | anioInicio > anioFin = viajesEntreAnios (viaje:restoViajes) anioFin anioInicio
-                                                        | obtenerAnioViaje viaje >= anioInicio && obtenerAnioViaje viaje <= anioFin = (nombreLugarViaje viaje, obtenerAnioViaje viaje) : viajesEntreAnios restoViajes anioInicio anioFin
-                                                        | otherwise = viajesEntreAnios restoViajes anioInicio anioFin
+viajesEntreAnios listaViajes anioInicio anioFin = map nombresYAniosViajes (filter (\viaje -> snd (nombresYAniosViajes viaje) >= anioInicio && snd (nombresYAniosViajes viaje) <= anioFin) listaViajes)
 
 --6 
 
