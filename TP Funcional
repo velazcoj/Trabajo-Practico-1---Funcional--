@@ -1,6 +1,6 @@
 -- 1)
-data Viajero = Viajero String Int [Recuerdo] [Viaje] deriving 
-data Viaje = Pasado String [Viajero -> Viajero] [Recuerdo] Int | Futuro String [Viajero -> Viajero] Int Int deriving
+data Viajero = Viajero String Int [Recuerdo] [Viaje] 
+data Viaje = Pasado String [Viajero -> Viajero] [Recuerdo] Int | Futuro String [Viajero -> Viajero] Int Int 
 data Recuerdo = Recuerdo String String deriving (Show,Eq)
 
 --Se pide:
