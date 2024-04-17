@@ -3,16 +3,6 @@ data Viajero = Viajero String Int [Recuerdo] [Viaje] deriving (Show,Eq)
 data Viaje = Pasado String [Viajero -> Viajero] [Recuerdo] Int | Futuro String [Viajero -> Viajero] Int Int deriving (Show,Eq)
 data Recuerdo = Recuerdo String String deriving (Show,Eq)
 
- 
-viajar (Viajero nombre edad recuerdos viajesActuales) viajes = foldl (\ acc x -> x acc)  (Viajero nombre edad  recuerdos (agregarViajes viajesActuales viajes)) (listatransformaciones viajes)
-
-listatransformaciones [] = []
-listatransformaciones (v:vs) = transformaciones v ++ listatransformaciones vs
-
-transformaciones (Pasado _ listatransformaciones _ ) = listaTransformaciones
-transformaciones (Futuro _ listatransformaciones _ _) = listaTransformaciones
-
-agregarViajes viajesActuales viajes4 = viajesActuales ++ viajes4
 
 
 --Se pide:
@@ -58,7 +48,7 @@ listatransformaciones (v:vs) = transformaciones v ++ listatransformaciones vs
 transformaciones (Pasado _ listatransformaciones _ ) = listaTransformaciones
 transformaciones (Futuro _ listatransformaciones _ _) = listaTransformaciones
 
-agregarViajes viajesActuales viajes4 = viajesActuales ++ viajes4
+agregarViajes viajesActuales viajesNuevos = viajesActuales ++ viajesNuevos
 
 
 
