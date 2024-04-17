@@ -41,8 +41,8 @@ viajar (Viajero nombre edad recuerdos viajesActuales) viajes = foldl (\ acc x ->
 listatransformaciones [] = []
 listatransformaciones (v:vs) = transformaciones v ++ listatransformaciones vs
 
-transformaciones (Pasado _ listatransformaciones _ ) = listaTransformaciones
-transformaciones (Futuro _ listatransformaciones _ _) = listaTransformaciones
+transformaciones (Pasado _ listaTransformaciones _ _) = listaTransformaciones
+transformaciones (Futuro _ listaTransformaciones _ _) = listaTransformaciones
 
 agregarViajes viajesActuales viajesNuevos = viajesActuales ++ viajesNuevos
 
