@@ -1,8 +1,15 @@
+
 -- 1)
-data Viajero = Viajero String Int [Recuerdo] [Viaje] 
+data Viajero = Viajero String Int [Recuerdo] [Viaje]  
 data Viaje = Pasado String [Viajero -> Viajero] [Recuerdo] Int | Futuro String [Viajero -> Viajero] Int Int 
 data Recuerdo = Recuerdo String String deriving (Show,Eq)
 
+instance Show Viaje where 
+    show (Pasado nombre lugares transformaciones anio) = "Viaje pasado {nombre = " ++ nombre ++ ", lugares = " ++ "Hola" ++ ", transformaciones = <funciones> , anio = " ++ show anio ++"}" 
+    show (Futuro nombre lugares aniosluz anio) = "Viaje futuro {nombre = " ++ nombre ++ ", lugares = " ++ "Hola" ++ ", aniosluz = " ++ show aniosluz ++ ", anio = " ++ show anio ++ "}"
+
+
+instance Show Viajero where show (Viajero nombre edad recuerdos viajes) = "Persona {nombre = " ++ nombre ++ ", edad = " ++ show edad ++ ", recuerdos = " ++ show recuerdos ++ ", viajes = " ++ show viajes ++ "}"
 --Se pide:
 --1. Definir las funciones que permitan obtener:
 --a. Dado un viajero su nombre,
@@ -36,13 +43,23 @@ nombresYAniosDeViajesInteresantes viajes = map nombresYAniosViajes (filter esInt
 viajesEntreAnios listaViajes anioInicio anioFin = map nombresYAniosViajes (filter (\viaje -> snd (nombresYAniosViajes viaje) >= anioInicio && snd (nombresYAniosViajes viaje) <= anioFin) listaViajes)
 
 --6 
-viajar (Viajero nombre edad recuerdos viajesActuales) viajes = foldl (\ acc x -> x acc)  (Viajero nombre edad  recuerdos (agregarViajes viajesActuales viajes)) (listatransformaciones viajes)
+
+viajar (Viajero nombre edad recuerdos viajesActuales) viajes = foldl (\ acc x -> x acc)  (Viajero nombre edad  (recuerdos ++ listaRecuerdos viajes) (agregarViajes viajesActuales viajes)) (listatransformaciones viajes)
+
+
+transformaciones (Pasado _ listaTransformaciones _ _ ) = listaTransformaciones
+transformaciones (Futuro _ listaTransformaciones _ _) = listaTransformaciones
 
 listatransformaciones [] = []
 listatransformaciones (v:vs) = transformaciones v ++ listatransformaciones vs
 
-transformaciones (Pasado _ listaTransformaciones _ _) = listaTransformaciones
-transformaciones (Futuro _ listaTransformaciones _ _) = listaTransformaciones
+
+recuerdos  (Pasado _ _ listaRecuerdos _ ) = listaRecuerdos 
+recuerdos (Futuro _ _ _ _ ) = [] 
+
+listaRecuerdos [] = []
+listaRecuerdos (v:vs) = recuerdos v ++ listaRecuerdos vs
+
 
 agregarViajes viajesActuales viajesNuevos = viajesActuales ++ viajesNuevos
 
@@ -68,6 +85,7 @@ esViajeFuturo (Futuro _ _ _ _) = True
 
 viajero1 = Viajero "Pedro" 35 [] []
 viajero2 = Viajero "Carlos" 19 [] []
+juan = Viajero "Juan" 23 [] []
 marty = Viajero "Marty McFly" 17 [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon] [viajePasado,viajeFuturo,viajeAChina]
 doc = Viajero "Dr Emmet Brown" 65 [] [viajePasado,viajeFuturo,viajeAChina]
 
@@ -77,12 +95,16 @@ recuerdoTiburon = Recuerdo "Holograma de Jaws 19" "Plaza"
 recuerdoPartido = Recuerdo "Partido entre amigos" "Cancha de independiente"
 recuerdoChoque = Recuerdo "Choque Automovilistico" "Ruta 11"
 recuerdoHamburguesa = Recuerdo "Hamburguesa triple" "Burger King"
+recuerdoVaqueros = Recuerdo "Sombrero" "Texas"
 
 viajePasado = Pasado "Marte" [] [] 1950
 viajeFuturo = Futuro "Luna" [] 300 2010
 viajeAChina = Futuro "China" [] 100 1985
 viajePrueba = Pasado "Lejano Oeste" [] [] 2005
 viajeDeAmigos = Pasado "Tokyo" [] [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon, recuerdoChoque, recuerdoHamburguesa, recuerdoPartido] 1930
+viajeTexas = Pasado "Lejano Oeste" [] [recuerdoVaqueros] 2018
+viajeTurista = Futuro "Caminito" [] 346 2040
+
 
 
 
