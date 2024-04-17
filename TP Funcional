@@ -1,6 +1,11 @@
 -- 1)
-data Viajero = Viajero String Int [Recuerdo] [Viaje] 
+data Viajero = Viajero String Int [Recuerdo] [Viaje]
+instance Show Viajero where
+    show (Viajero nombre _ _ _) = nombre
 data Viaje = Pasado String [Viajero -> Viajero] [Recuerdo] Int | Futuro String [Viajero -> Viajero] Int Int 
+instance Show Viaje where
+    show (Futuro destino _ _ _) = destino
+    show (Pasado destino _ _ _) = destino
 data Recuerdo = Recuerdo String String deriving (Show,Eq)
 
 --Se pide:
@@ -55,7 +60,7 @@ agregarViajes viajesActuales viajesNuevos = viajesActuales ++ viajesNuevos
 estadistica condicion transformacion lista = map transformacion (filter condicion lista)
 
 --consulta A
--- estadistica ((>3).length).transformaciones nombreLugarViaje [viajePasado,viajeFuturo,viajeAChina]
+-- estadistica (((>3).length).transformaciones) nombreLugarViaje [viajePasado,viajeFuturo,viajeAChina]
 
 --consulta B
 -- sum (estadistica esViajeFuturo (\(Futuro _ _ _ aniosLuz) -> aniosLuz) [viajePasado, viajeFuturo, viajeAChina, viajePrueba])
