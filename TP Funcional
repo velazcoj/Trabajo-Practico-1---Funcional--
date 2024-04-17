@@ -3,8 +3,6 @@ data Viajero = Viajero String Int [Recuerdo] [Viaje] deriving (Show,Eq)
 data Viaje = Pasado String [Viajero -> Viajero] [Recuerdo] Int | Futuro String [Viajero -> Viajero] Int Int deriving (Show,Eq)
 data Recuerdo = Recuerdo String String deriving (Show,Eq)
 
-
-
 --Se pide:
 --1. Definir las funciones que permitan obtener:
 --a. Dado un viajero su nombre,
@@ -26,8 +24,7 @@ recuerdosYViajes(Viajero _ _ recuerdos viajes) = (recuerdos,viajes)
 --b. Si es un viaje al pasado y el viajero se puede traer más de 5 recuerdos
 --c. Todos los viajes al futuro son interesantes.
 esInteresante (Pasado "Lejano Oeste" _ _ _) = True 
-esInteresante (Pasado _ _ listaRecuerdos _) = length listaRecuerdos > 5                          
-                                                         
+esInteresante (Pasado _ _ listaRecuerdos _) = length listaRecuerdos > 5                                                                                  
 esInteresante (Futuro _ _ _ _) = True
 
 --4. Hacer una función que dada una lista de viajes, permita mostrar los nombres y los años de todos los viajes que son interesantes.
@@ -35,7 +32,6 @@ nombresYAniosViajes (Pasado lugarviaje _ _ anio) = (lugarviaje,anio)
 nombresYAniosViajes (Futuro lugarviaje _ _ anio) = (lugarviaje,anio)
 nombresYAniosDeViajesInteresantes viajes = map nombresYAniosViajes (filter esInteresante viajes)
   
-
 --5. Hacer una función que dada una lista de viajes, un año inicio y un año fin, se pueda obtener cuáles son los nombres y el año de todos los viajes entre dos años que están en el rango pasado por parámetro.
 viajesEntreAnios listaViajes anioInicio anioFin = map nombresYAniosViajes (filter (\viaje -> snd (nombresYAniosViajes viaje) >= anioInicio && snd (nombresYAniosViajes viaje) <= anioFin) listaViajes)
 
@@ -50,8 +46,6 @@ transformaciones (Futuro _ listatransformaciones _ _) = listaTransformaciones
 
 agregarViajes viajesActuales viajesNuevos = viajesActuales ++ viajesNuevos
 
-
-
 --7. Hacer la función estadística que reciba una función de condición, una función de transformación y una lista. Luego, usarla para resolver las siguientes consultas:
 --a. Dada una lista, encontrar todos los nombres de los viajes que tienen más de 3 transformaciones.
 --b. Dada una lista de viajes, obtener la suma de todos los años luz que suman
@@ -62,9 +56,6 @@ estadistica condicion transformacion lista = map transformacion (filter condicio
 
 --consulta A
 -- estadistica ((>3).length).transformaciones nombreLugarViaje [viajePasado,viajeFuturo,viajeAChina]
-
-transformaciones (Futuro _ transformacion _ _) = transformacion
-transformaciones (Pasado _ transformacion _ _) = transformacion
 
 --consulta B
 -- sum (estadistica esViajeFuturo (\(Futuro _ _ _ aniosLuz) -> aniosLuz) [viajePasado, viajeFuturo, viajeAChina, viajePrueba])
