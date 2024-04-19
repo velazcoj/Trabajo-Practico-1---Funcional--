@@ -34,6 +34,7 @@ recuerdosYViajes(Viajero _ _ recuerdos viajes) = (recuerdos,viajes)
 esInteresante (Pasado "Lejano Oeste" _ _ _) = True 
 esInteresante (Pasado _ _ listaRecuerdos _) = length listaRecuerdos > 5                                                                                  
 esInteresante (Futuro _ _ _ _) = True
+esInteresante _ = False
 
 --4. Hacer una función que dada una lista de viajes, permita mostrar los nombres y los años de todos los viajes que son interesantes.
 nombresYAniosViajes (Pasado lugarviaje _ _ anio) = (lugarviaje,anio)
