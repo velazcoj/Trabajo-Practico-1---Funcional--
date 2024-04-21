@@ -46,21 +46,23 @@ viajesEntreAnios listaViajes anioInicio anioFin = map nombresYAniosViajes (filte
 
 --6 
 
-viajar (Viajero nombre edad recuerdos viajesActuales) viajes = foldl (\ acc x -> x acc)  (Viajero nombre edad  (recuerdos ++ listaRecuerdos viajes) (agregarViajes viajesActuales viajes)) (listatransformaciones viajes)
+viajar viajero viajes = foldl (\ acc x -> hacerViaje acc x)  viajero  viajes
 
+hacerViaje :: Viajero -> Viaje -> Viajero
+hacerViaje (Viajero nombre edad recuerdosViajero viajesActuales) viaje = foldl (\ acc x -> x acc)  (Viajero nombre edad  ( recuerdosViajero ++ recuerdos viaje ) (viajesActuales ++ [viaje])) (transformaciones viaje)
 
-transformaciones (Pasado _ listaTransformaciones _ _ ) = listaTransformaciones
+transformaciones (Pasado _  listaTransformaciones _ _ ) = listaTransformaciones
 transformaciones (Futuro _ listaTransformaciones _ _) = listaTransformaciones
-
-listatransformaciones [] = []
-listatransformaciones (v:vs) = transformaciones v ++ listatransformaciones vs
 
 
 recuerdos  (Pasado _ _ listaRecuerdos _ ) = listaRecuerdos 
 recuerdos (Futuro _ _ _ _ ) = [] 
 
-listaRecuerdos [] = []
-listaRecuerdos (v:vs) = recuerdos v ++ listaRecuerdos vs
+--ejemplos transformaciones
+aumentarEdad (Viajero nombre edad recuerdos viajes) = Viajero nombre (edad + 1) recuerdos viajes
+disminuirEdad (Viajero nombre edad recuerdos viajes) = Viajero nombre (edad - 1) recuerdos viajes
+
+
 
 
 agregarViajes viajesActuales viajesNuevos = viajesActuales ++ viajesNuevos
@@ -102,9 +104,9 @@ recuerdoVaqueros = Recuerdo "Sombrero" "Texas"
 viajePasado = Pasado "Marte" [] [] 1950
 viajeFuturo = Futuro "Luna" [] 300 2010
 viajeAChina = Futuro "China" [] 100 1985
-viajePrueba = Pasado "Lejano Oeste" [] [] 2005
-viajeDeAmigos = Pasado "Tokyo" [] [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon, recuerdoChoque, recuerdoHamburguesa, recuerdoPartido] 1930
-viajeTexas = Pasado "Lejano Oeste" [] [recuerdoVaqueros] 2018
+viajePrueba = Pasado "Lejano Oeste" [aumentarEdad] [] 2005
+viajeDeAmigos = Pasado "Tokyo" [aumentarEdad] [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon, recuerdoChoque, recuerdoHamburguesa, recuerdoPartido] 1930
+viajeTexas = Pasado "Lejano Oeste" [aumentarEdad] [recuerdoVaqueros] 2018
 viajeTurista = Futuro "Caminito" [] 346 2040
 
 
