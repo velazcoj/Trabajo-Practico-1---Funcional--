@@ -48,7 +48,7 @@ viajesEntreAnios listaViajes anioInicio anioFin = map nombresYAniosViajes (filte
 
 viajar viajero viajes = foldl (\ acc x -> hacerViaje acc x)  viajero  viajes
 
-hacerViaje :: Viajero -> Viaje -> Viajero
+
 hacerViaje (Viajero nombre edad recuerdosViajero viajesActuales) viaje = foldl (\ acc x -> x acc)  (Viajero nombre edad  ( recuerdosViajero ++ recuerdos viaje ) (viajesActuales ++ [viaje])) (transformaciones viaje)
 
 transformaciones (Pasado _  listaTransformaciones _ _ ) = listaTransformaciones
@@ -64,8 +64,6 @@ disminuirEdad (Viajero nombre edad recuerdos viajes) = Viajero nombre (edad - 1)
 
 
 
-
-agregarViajes viajesActuales viajesNuevos = viajesActuales ++ viajesNuevos
 
 --7. Hacer la función estadística que reciba una función de condición, una función de transformación y una lista. Luego, usarla para resolver las siguientes consultas:
 --a. Dada una lista, encontrar todos los nombres de los viajes que tienen más de 3 transformaciones.
@@ -107,9 +105,6 @@ viajeAChina = Futuro "China" [] 100 1985
 viajePrueba = Pasado "Lejano Oeste" [aumentarEdad] [] 2005
 viajeDeAmigos = Pasado "Tokyo" [aumentarEdad] [recuerdoBaile,recuerdoPersecucion,recuerdoTiburon, recuerdoChoque, recuerdoHamburguesa, recuerdoPartido] 1930
 viajeTexas = Pasado "Lejano Oeste" [aumentarEdad] [recuerdoVaqueros] 2018
-viajeTurista = Futuro "Caminito" [] 346 2040
-
-
-
+viajeTurista = Futuro "Caminito" [disminuirEdad] 346 2040
 
 
